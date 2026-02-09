@@ -6,7 +6,7 @@ return [
     'username' => 'postgres',
     'password' => '123123',
     'charset' => 'utf8',
-
+    //tes duu lah
     // Schema cache options (for production environment)
     //'enableSchemaCache' => true,
     //'schemaCacheDuration' => 60,
