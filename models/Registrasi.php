@@ -56,7 +56,7 @@ class Registrasi extends \yii\db\ActiveRecord
             'no_rekam_medis' => 'No Rekam Medis',
             'nama_pasien' => 'Nama Pasien',
             'tanggal_lahir' => 'Tanggal Lahir',
-            'nik' => 'Nik',
+            'nik' => 'NIK',
             'create_by' => 'Create By',
             'create_time_at' => 'Create Time At',
             'update_by' => 'Update By',

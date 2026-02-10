@@ -4,20 +4,20 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var app\models\Registrasi $model */
+/** @var app\models\DataForm $model */
 
-$this->title = $model->id_registrasi;
-$this->params['breadcrumbs'][] = ['label' => 'Registrasi', 'url' => ['index']];
+$this->title = $model->id_form_data;
+$this->params['breadcrumbs'][] = ['label' => 'Data Forms', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="registrasi-view">
+<div class="data-form-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id_registrasi' => $model->id_registrasi], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id_registrasi' => $model->id_registrasi], [
+        <?= Html::a('Update', ['update', 'id_form_data' => $model->id_form_data], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id_form_data' => $model->id_form_data], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -29,15 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
+            'id_form_data',
+            'id_form',
             'id_registrasi',
-            'no_registrasi',
-            'no_rekam_medis',
-            'nama_pasien',
-            'tanggal_lahir',
-            'nik',
+            'data',
+            'is_delete:boolean',
             'create_by',
-            'create_time_at',
             'update_by',
+            'create_time_at',
             'update_time_at',
         ],
     ]) ?>
