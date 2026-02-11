@@ -1,21 +1,16 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
-/** @var yii\web\View $this */
-/** @var app\models\DataForm $model */
+/* @var $this yii\web\View */
+/* @var $model app\models\DataForm */
 
-$this->title = 'Update Data Form: ' . $model->id_form_data;
-$this->params['breadcrumbs'][] = ['label' => 'Data Forms', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_form_data, 'url' => ['view', 'id_form_data' => $model->id_form_data]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Update Data Pengkajian: ' . $model->id_form_data;
+
 ?>
-<div class="data-form-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
-</div>
+<?= $this->render('_form_isi', [
+    'model' => $model,
+    'data' => $data,
+    'isView' => false, 
+]) ?>

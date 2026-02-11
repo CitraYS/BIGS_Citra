@@ -1,7 +1,7 @@
 <?php
 
 use app\models\Registrasi;
-use app\models\DataForm; // Tambahkan ini untuk cek data
+use app\models\DataForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -18,7 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Registrasi', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Tambah Registrasi', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Dashboard Data Form', ['/data-form/index'], ['class' => 'btn btn-warning']) ?>
     </p>
 
 
@@ -39,25 +40,23 @@ $this->params['breadcrumbs'][] = $this->title;
             //'update_time_at',
             [
                 'class' => ActionColumn::className(),
-                'template' => '{view} {update} {delete} {input-medis} {view-laporan}', // Tambah tombol custom
+                'template' => '{view} {update} {delete} {input-medis} {view-laporan}', 
                 'buttons' => [
-                    // Tombol untuk Input Data Form (Poin 3.3)
                     'input-medis' => function ($url, Registrasi $model) {
                         return Html::a(
-                            '<span class="glyphicon glyphicon-plus"></span> Input',
+                            '<span class="glyphicon glyphicon-plus"></span> Proses Pengkajian',
                             ['data-form/create', 'id_registrasi' => $model->id_registrasi],
-                            ['class' => 'btn btn-primary btn-xs', 'title' => 'Input Medis']
+                            ['class' => 'btn btn-primary btn-xs', 'title' => 'Proses Pengkajian']
                         );
                     },
-                    // Tombol untuk Lihat Laporan seperti Lampiran 1
+           
                     'view-laporan' => function ($url, Registrasi $model) {
-                        // Cek apakah sudah ada datanya di tabel data_form
                         $exists = DataForm::find()->where(['id_registrasi' => $model->id_registrasi])->one();
                         if ($exists) {
                             return Html::a(
-                                '<span class="glyphicon glyphicon-print"></span> Laporan',
+                                '<span class="glyphicon glyphicon-print"></span> Laporan Pengkajian',
                                 ['data-form/view-laporan', 'id_registrasi' => $model->id_registrasi],
-                                ['class' => 'btn btn-info btn-xs', 'title' => 'Lihat Laporan Lampiran 1']
+                                ['class' => 'btn btn-info btn-xs', 'title' => 'Laporan Pengkajian']
                             );
                         }
                         return '';

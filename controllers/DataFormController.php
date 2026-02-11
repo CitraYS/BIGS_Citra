@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\DataForm;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -75,16 +76,26 @@ class DataFormController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($id_registrasi = null)
     {
         $model = new DataForm();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+
+            $postData = Yii::$app->request->post('DataForm');
+
+            $model->id_registrasi = $id_registrasi ?? $postData['id_registrasi'];
+            $model->id_form = 1;
+
+            unset($postData['id_registrasi']);
+            $model->data = json_encode($postData);
+
+            $model->create_by = Yii::$app->user->id ?? 1;
+            $model->create_time_at = date('Y-m-d H:i:s');
+
+            if ($model->save(false)) {
                 return $this->redirect(['view', 'id_form_data' => $model->id_form_data]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -102,16 +113,39 @@ class DataFormController extends Controller
     public function actionUpdate($id_form_data)
     {
         $model = $this->findModel($id_form_data);
+        $data = json_encode($model->data) ? json_decode($model->data, true) : [];
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_form_data' => $model->id_form_data]);
+        if ($this->request->isPost) {
+            // 1. Ambil data dari array DataForm yang ada di POST
+            $postData = Yii::$app->request->post('DataForm');
+
+            if ($postData) {
+                // 2. Simpan id_registrasi (jika tidak ingin berubah)
+                // Pastikan id_registrasi tidak ikut masuk ke dalam JSON data
+                $id_reg = $postData['id_registrasi'] ?? $model->id_registrasi;
+                unset($postData['id_registrasi']);
+                
+
+                // 3. Bungkus semua sisa inputan ke dalam kolom JSON 'data'
+                $model->data = json_encode($postData);
+
+                // 4. Update data metadata
+                $model->id_registrasi = $id_reg;
+                $model->update_by = Yii::$app->user->id ?? 1;
+                $model->update_time_at = date('Y-m-d H:i:s');
+
+                // 5. Simpan (gunakan false untuk bypass validasi kolom yang tidak ada di DB)
+                if ($model->save(false)) {
+                    return $this->redirect(['view', 'id_form_data' => $model->id_form_data]);
+                }
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'data' => $data,
         ]);
     }
-
     /**
      * Deletes an existing DataForm model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -150,10 +184,9 @@ class DataFormController extends Controller
             throw new \yii\web\NotFoundHttpException("Data medis belum diisi.");
         }
 
-        // Decode data JSON (Poin 161)
         $dataMedis = json_decode($modelForm->data, true);
 
-        return $this->render('view_laporan', [
+        return $this->render('view-laporan', [
             'registrasi' => $modelRegistrasi,
             'data' => $dataMedis,
         ]);

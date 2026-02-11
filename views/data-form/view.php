@@ -12,9 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="data-form-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
+    <?= Html::a('Dashboard Form', ['index'], ['class' => 'btn btn-success']) ?></p> 
     <p>
         <?= Html::a('Update', ['update', 'id_form_data' => $model->id_form_data], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id_form_data' => $model->id_form_data], [
@@ -32,7 +30,27 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_form_data',
             'id_form',
             'id_registrasi',
-            'data',
+            [
+                'attribute' => 'data',
+                'format' => 'raw', 
+                'value' => function ($model) {
+                    $isiData = json_decode($model->data, true);
+
+                    if (!$isiData) return '-';
+
+                    $html = '<table class="table table-bordered table-striped" style="margin-top:10px">';
+                    foreach ($isiData as $key => $val) {
+                        $label = ucwords(str_replace('_', ' ', $key));
+                        $html .=    "<tr>
+                                        <th style='width:30%'>$label</th>
+                                        <td>$val</td>
+                                    </tr>";
+                    }
+                    $html .= '</table>';
+
+                    return $html;
+                }
+            ],
             'is_delete:boolean',
             'create_by',
             'update_by',
