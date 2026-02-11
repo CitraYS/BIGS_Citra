@@ -85,7 +85,7 @@ class DataFormController extends Controller
             $postData = Yii::$app->request->post('DataForm');
 
             $model->id_registrasi = $id_registrasi ?? $postData['id_registrasi'];
-            $model->id_form = 1;
+            $model->id_form = $postData['id_form'];
 
             unset($postData['id_registrasi']);
             $model->data = json_encode($postData);
@@ -124,7 +124,7 @@ class DataFormController extends Controller
                 // Pastikan id_registrasi tidak ikut masuk ke dalam JSON data
                 $id_reg = $postData['id_registrasi'] ?? $model->id_registrasi;
                 unset($postData['id_registrasi']);
-                
+
 
                 // 3. Bungkus semua sisa inputan ke dalam kolom JSON 'data'
                 $model->data = json_encode($postData);
@@ -178,6 +178,7 @@ class DataFormController extends Controller
     public function actionViewLaporan($id_registrasi)
     {
         $modelRegistrasi = \app\models\Registrasi::findOne($id_registrasi);
+        $modelUser = \app\models\User::findOne($modelRegistrasi->create_by);
         $modelForm = \app\models\DataForm::find()->where(['id_registrasi' => $id_registrasi])->one();
 
         if (!$modelForm) {
@@ -189,6 +190,9 @@ class DataFormController extends Controller
         return $this->render('view-laporan', [
             'registrasi' => $modelRegistrasi,
             'data' => $dataMedis,
+            'formulir' => $modelForm,
+           'petugas' => $modelUser,
         ]);
     }
+    
 }

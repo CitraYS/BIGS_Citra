@@ -58,10 +58,13 @@ class Registrasi extends \yii\db\ActiveRecord
             'tanggal_lahir' => 'Tanggal Lahir',
             'nik' => 'NIK',
             'create_by' => 'Create By',
-            'create_time_at' => 'Create Time At',
+            'create_time_at' => 'Waktu Tambah Registrasi',
             'update_by' => 'Update By',
-            'update_time_at' => 'Update Time At',
+            'update_time_at' => 'Waktu Update Registrasi',
         ];
     }
-
+    public function getPetugas()
+    {
+        return $this->hasOne(\app\models\User::class, ['id_user' => 'create_by']);
+    }
 }

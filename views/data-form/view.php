@@ -35,9 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw', 
                 'value' => function ($model) {
                     $isiData = json_decode($model->data, true);
-
                     if (!$isiData) return '-';
-
                     $html = '<table class="table table-bordered table-striped" style="margin-top:10px">';
                     foreach ($isiData as $key => $val) {
                         $label = ucwords(str_replace('_', ' ', $key));
@@ -51,11 +49,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $html;
                 }
             ],
-            'is_delete:boolean',
-            'create_by',
-            'update_by',
-            'create_time_at',
-            'update_time_at',
+            //'is_delete:boolean',
+            //'create_by',
+            //'update_by',
+            //'create_time_at',
+            //'update_time_at',
         ],
     ]) ?>
 

@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="registrasi-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>Tambah Data Registrasi</h1>
 
     <?= $this->render('_form', [
         'model' => $model,

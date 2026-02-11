@@ -9,6 +9,8 @@ use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+/* @var $registrasi app\models\Registrasi */
+/* @var $petugas app\models\User */
 
 $this->title = 'Registrasi';
 $this->params['breadcrumbs'][] = $this->title;
@@ -33,11 +35,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'no_rekam_medis',
             'nama_pasien',
             'tanggal_lahir',
-            //'nik',
-            //'create_by',
-            //'create_time_at',
-            //'update_by',
-            //'update_time_at',
+            'nik',
+             [
+                'label' => 'Petugas',
+                'value' => function ($model) {
+                    return $model->petugas ? $model->petugas->nama_user : '-';
+                },
+            ],
+            'create_time_at',
+            'update_by',
+            'update_time_at',
             [
                 'class' => ActionColumn::className(),
                 'template' => '{view} {update} {delete} {input-medis} {view-laporan}', 
@@ -70,3 +77,4 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
 </div>
+

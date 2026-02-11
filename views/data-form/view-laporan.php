@@ -19,6 +19,8 @@ use yii\helpers\Html;
 /* @var $registrasi app\models\Registrasi */
 /* @var $data array */
 /* @var $model app\models\DataForm */
+/* @var $formulir app\models\DataForm */
+/* @var $petugas app\models\User */
 
 $this->title = 'Laporan Pengkajian ' . $registrasi->id_registrasi;
 ?>
@@ -36,7 +38,7 @@ $this->title = 'Laporan Pengkajian ' . $registrasi->id_registrasi;
         </tr>
         <tr>
             <td style="font-weight: bold;">Tanggal Lahir : </td>
-            <td><?= Html::encode($registrasi->tanggal_lahir) ?></td>
+            <td><?= Html::encode(date('d-m-Y', strtotime($registrasi->tanggal_lahir))) ?></td>
         </tr>
         <tr>
             <td style="font-weight: bold;">No. RM : </td>
@@ -47,15 +49,15 @@ $this->title = 'Laporan Pengkajian ' . $registrasi->id_registrasi;
     <table style="width: 25%;">
         <tr>
             <td style="font-weight: bold;">Tanggal Pengkajian : </td>
-            <td><?= Html::encode($registrasi->create_time_at) ?></td>
+            <td><?= Html::encode(date('d-m-Y', strtotime($formulir->create_time_at))) ?></td>
         </tr>
         <tr>
             <td style="font-weight: bold;">Jam Pengkajian : </td>
-            <td><?= Html::encode($registrasi->create_time_at) ?></td>
+            <td><?= Html::encode(date('H:i', strtotime($formulir->create_time_at))) ?></td>
         </tr>
         <tr>
             <td style="font-weight: bold;">Poliklinik </td>
-            <td><?= Html::encode($registrasi->nama_pasien) ?></td>
+            <td><?= Html::encode($petugas->poliklinik) ?></td>
         </tr>
     </table>
     <br>
@@ -77,11 +79,11 @@ $this->title = 'Laporan Pengkajian ' . $registrasi->id_registrasi;
         </tr>
         <tr>
             <td style="font-weight: bold;">Tanggal / Pukul</td>
-            <td><?= Html::encode($registrasi->create_time_at) ?></td>
+            <td><?= date('d-m-Y H:i') ?></td>
         </tr>
         <tr>
             <td style="font-weight: bold;">Nama Lengkap</td>
-            <td>Citra Yunela Sari</td>
+            <td><?= Html::encode($petugas->nama_user) ?></td>
         </tr>
         <tr>
             <td style="font-weight: bold;">Tanda Tangan</td>

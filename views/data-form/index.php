@@ -8,6 +8,7 @@ use yii\grid\GridView;
 
 /* @var $registrasi app\models\Registrasi */
 /* @var $data array */
+
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
@@ -18,32 +19,43 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-     <?= Html::a('Dashboard Registrasi', ['/registrasi/index'], ['class' => 'btn btn-success']) ?></p> 
+    <?= Html::a('Dashboard Registrasi', ['/registrasi/index'], ['class' => 'btn btn-success']) ?></p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            //'id_form_data',
-            'id_form',
+            'id_form_data',
+            //'id_form',
             'id_registrasi',
-            'nama_pasien',
             [
+                'label' => 'Nama Pasien',
+                'value' => function ($model) {
+                    return $model->registrasi ? $model->registrasi->nama_pasien : '-';
+                },
+            ],
+            [ //nampil 1 data aja
                 'attribute' => 'data',
-                'format' => 'raw', 
+                'label' => 'Hasil',
+                'format' => 'raw',
                 'value' => function ($model) {
                     $isiData = json_decode($model->data, true);
-                    if (!$isiData) return '-';
-                    $html = '<table class="table table-bordered table-striped" style="margin-top:10px">';
-                    foreach ($isiData as $key => $val) {
-                        $label = ucwords(str_replace('_', ' ', $key));
-                        $html .=    "<tr>
-                                        <th style='width:30%'>$label</th>
-                                        <td>$val</td>
-                                    </tr>";
+                    if (isset($isiData['total_jatuh'])) {
+                        return $isiData['total_jatuh'];
                     }
-                    $html .= '</table>';
-                    return $html;
+                    return '-'; 
+                }
+            ],
+            [ //nampil 1 data aja
+                'attribute' => 'data',
+                'label' => 'Resiko',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $isiData = json_decode($model->data, true);
+                    if (isset($isiData['label_intervensi'])) {
+                        return $isiData['label_intervensi'];
+                    }
+                    return '-'; 
                 }
             ],
             //'is_delete:boolean',
@@ -55,7 +67,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, DataForm $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id_form_data' => $model->id_form_data]);
-                 }
+                }
+
             ],
         ],
     ]); ?>

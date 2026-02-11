@@ -225,8 +225,8 @@ if (!function_exists('val')) {
                 <?= Html::dropDownList('DataForm[is_operasi]', val($data, 'is_operasi'), ['Tidak' => 'Tidak', 'Ya' => 'Ya'], ['class' => 'form-control', 'id' => 'is_operasi', 'disabled' => $isView]) ?>
                 <div id="box_operasi" style="display:none; margin-top:10px; background: #eee; padding: 10px;">
                     <label>Operasi apa & Kapan?</label>
-                    <input type="text" name="DataForm[operasi_apa]" class="form-control" placeholder="Nama Operasi">
-                    <input type="text" name="DataForm[operasi_kapan]" class="form-control" placeholder="Tahun" style="margin-top:5px;">
+                    <?= Html::textInput('DataForm[operasi_apa]', val($data, 'operasi_apa'), ['class' => 'form-control', 'disabled' => $isView]) ?>
+                    <?= Html::textInput('DataForm[operasi_kapan]', val($data, 'operasi_kapan'), ['class' => 'form-control', 'disabled' => $isView]) ?>
                 </div>
             </div>
         </div>
@@ -236,8 +236,8 @@ if (!function_exists('val')) {
                 <?= Html::dropDownList('DataForm[is_dirawat]', val($data, 'is_dirawat'), ['Tidak' => 'Tidak', 'Ya' => 'Ya'], ['class' => 'form-control', 'id' => 'is_dirawat', 'disabled' => $isView]) ?>
                 <div id="box_dirawat" style="display:none; margin-top:10px; background: #eee; padding: 10px;">
                     <label>Penyakit apa & Kapan?</label>
-                    <input type="text" name="DataForm[penyakit_apa]" class="form-control" placeholder="Nama Penyakit">
-                    <input type="text" name="DataForm[penyakit_kapan]" class="form-control" placeholder="Tahun" style="margin-top:5px;">
+                    <?= Html::textInput('DataForm[penyakit_apa]', val($data, 'penyakit_apa'), ['class' => 'form-control', 'disabled' => $isView]) ?>
+                    <?= Html::textInput('DataForm[penyakit_kapan]', val($data, 'penyakit_kapan'), ['class' => 'form-control', 'disabled' => $isView]) ?>
                 </div>
             </div>
         </div>
@@ -323,7 +323,8 @@ if (!function_exists('val')) {
                 <th colspan="4" style="text-align: center; vertical-align: middle;">Total Skor</th>
                 <td>
                     <input type="text" id="total_skor" name="DataForm[total_jatuh]" class="form-control" style="text-align: center;" readonly>
-                    <small id="label_intervensi" class="text-danger" style="font-weight:bold;"></small>
+                    <input type="text" id="label_intervensi" name="DataForm[label_intervensi]" class="form-control" style="text-align: center;font-weight: bold;color: #ff0018;" readonly>
+                    
                 </td>
             </tr>
         </table>
@@ -351,7 +352,6 @@ $script = <<< JS
         }
     }
     
-    
     $(document).on('change', '#is_operasi', function() {
         $('#box_operasi').toggle($(this).val() === 'Ya');
     });
@@ -367,18 +367,17 @@ $script = <<< JS
         });
         $('#total_skor').val(total);
         let label = (total >= 45) ? "Lakukan Intervensi Jatuh Resiko Tinggi" : (total >= 25) ? "Lakukan Intervensi Jatuh Resiko Rendah" : "Perawatan yang Baik";
-        $('#label_intervensi').text(label);
+        $('#label_intervensi').val(label);
     }
 
     $(document).on('change', '#select_anamnesis', function() { $('#box_alonemnesis').toggle($(this).val() === 'Alonemnesis'); });
     $(document).on('input', '#bb, #tb', kalkulasiIMT);
     $(document).on('change', '.skor-input', hitungSkorJatuh);
 
-    // Jalankan saat halaman dibuka (Edit Mode)
     kalkulasiIMT();
     hitungSkorJatuh();
     $('#box_alonemnesis').toggle($('#select_anamnesis').val() === 'Alonemnesis');
-     $('#box_operasi').toggle($('#is_operasi').val() === 'Ya');
+    $('#box_operasi').toggle($('#is_operasi').val() === 'Ya');
     $('#box_dirawat').toggle($('#is_dirawat').val() === 'Ya');
 
     if ("$isView" == "1") {
