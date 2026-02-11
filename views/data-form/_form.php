@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
 
             <div class="row">
                 <div class="col-md-12">
-                    <label>2. Anamnesis</label>
+                    <label style="min-width: 120px; font-weight: bold;">2. Anamnesis</label>
                     <?= Html::dropDownList('DataForm[anamnesis_tipe]', '', [
                         'Autoanamnesis' => 'Autoanamnesis',
                         'Alonemnesis' => 'Alonemnesis'
@@ -56,11 +56,11 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="row" style="margin-top:15px;">
                 <div class="col-md-12">
-                    <label>3. Keluhan Utama</label>
+                    <label style="min-width: 120px; font-weight: bold;">3. Keluhan Utama</label>
                     <?= Html::textInput('DataForm[keluhan_utama]', '', ['class' => 'form-control']) ?>
                 </div>
             </div>
-            <label>4. Pemeriksaan Fisik :</label>
+            <label style="min-width: 120px; font-weight: bold;">4. Pemeriksaan Fisik :</label>
             <div class="row" style="margin-left: 10px;">
                 <div class="form-group" style="display: flex; align-items: center; gap: 20px;">
                     <label style="min-width: 120px; margin-bottom: 0; font-weight: bold;">A. Keadaan Umum : </label>
@@ -167,7 +167,7 @@ use yii\widgets\ActiveForm;
             <hr>
             <div class="row" style="margin-top:15px;">
                 <div class="col-md-12">
-                    <label>5. Riwayat Penyakit Sekarang : </label>
+                    <label style="min-width: 120px; font-weight: bold;">5. Riwayat Penyakit Sekarang : </label>
                     <?= Html::textarea('DataForm[r_penyakit_baru]', '', ['class' => 'form-control', 'rows' => 1]) ?>
                 </div>
             </div>
@@ -197,13 +197,13 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="row" style="margin-top:15px;">
                 <div class="col-md-12">
-                    <label>8. Riwayat Penyakit Keluarga : </label>
+                    <label style="min-width: 120px; font-weight: bold;">8. Riwayat Penyakit Keluarga : </label>
                     <?= Html::textarea('DataForm[r_penyakit_keluarga]', '', ['class' => 'form-control', 'rows' => 1]) ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <label>9. Riwayat Operasi</label>
+                    <label style="min-width: 120px; font-weight: bold;">9. Riwayat Operasi</label>
                     <?= Html::dropDownList('DataForm[is_operasi]', 'Tidak', ['Tidak' => 'Tidak', 'Ya' => 'Ya'], ['class' => 'form-control', 'id' => 'is_operasi']) ?>
                     <div id="box_operasi" style="display:none; margin-top:10px; background: #eee; padding: 10px;">
                         <label>Operasi apa & Kapan?</label>
@@ -214,7 +214,7 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <label>10. Pernah Dirawat di RS?</label>
+                    <label style="min-width: 120px; font-weight: bold;">10. Pernah Dirawat di RS?</label>
                     <?= Html::dropDownList('DataForm[is_dirawat]', 'Tidak', ['Tidak' => 'Tidak', 'Ya' => 'Ya'], ['class' => 'form-control', 'id' => 'is_dirawat']) ?>
                     <div id="box_dirawat" style="display:none; margin-top:10px; background: #eee; padding: 10px;">
                         <label>Penyakit apa & Kapan?</label>
@@ -225,7 +225,7 @@ use yii\widgets\ActiveForm;
             </div>
 
             <hr>
-            <label>15. Pengkajian Resiko Jatuh</label>
+            <label style="min-width: 120px; font-weight: bold;">15. Pengkajian Resiko Jatuh</label>
             <table class="table table-bordered">
                 <th>No</th>
                 <th colspan="2">Resiko</th>
